@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.CommonResponse;
 import com.example.demo.dto.ProductDto;
+import com.example.demo.dto.UpdateStokDto;
 import com.example.demo.entity.ProductEntity;
 import com.example.demo.service.ProductService;
 import org.springframework.web.bind.annotation.*;
@@ -18,28 +19,39 @@ public class ProductController {
     }
 
     @GetMapping("")
-    public List<ProductEntity> getProducts() {
-        //TODO: Add code to get all product list here
-        return productService.fetchAll();
+    public List<ProductEntity> getProducts(@RequestParam(value = "inStock", defaultValue = "0")boolean isInStock) {
+        return productService.fetch(isInStock);
     }
 
+    @GetMapping("byPrice")
+    public List<ProductEntity> getProducts(@RequestParam(value = "byPrice", defaultValue = "1000")long byPrice) {
+        return productService.fetchAllInPrice(byPrice);
+    }
+
+    //yg dri price
+    /*@GetMapping("")
+    public List<ProductEntity> getProductsByPrice(@PathVariable("price") String maxPrice) {
+        return productService.fetchAllInPrice(Long.parseLong(maxPrice));
+    }*/
+
+    /*@GetMapping("{price}")
+    public List<ProductEntity> getProductByPrice(@PathVariable("price") String price) {
+        return productService.getByPrice(Long.parseLong(price));
+    }*/
+
     @GetMapping("{id}")
-    public CommonResponse getProduct(@PathVariable("id") String id) {
-        //TODO: Add code to get product here
-        return new CommonResponse("Dummy Product");
+    public ProductEntity getProduct(@PathVariable("id") String id) {
+        return productService.getById(Long.parseLong(id));
     }
 
     @PostMapping("")
     public ProductEntity addProduct(@RequestBody ProductDto productDto) {
         //TODO: Code to post has added here
-        return productService.add(productDto);
-        //return new CommonResponse("Successfully add new product");
-    }
+        return productService.add(productDto);    }
 
     @PutMapping("/stock")
-    public CommonResponse updateStock() {
-        //TODO: Add code to post here
-        return new CommonResponse("Successfully update stock");
+    public ProductEntity updateStock(@RequestBody UpdateStokDto request) {
+        return productService.updateStock(request);
     }
 
     @DeleteMapping("{id}")

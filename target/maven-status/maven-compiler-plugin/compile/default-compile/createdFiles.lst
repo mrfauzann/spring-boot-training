@@ -5,5 +5,6 @@ com\example\demo\repository\ProductRepository.class
 com\example\demo\controller\GreetingController.class
 com\example\demo\dto\CommonResponse.class
 com\example\demo\dto\Hello.class
+com\example\demo\dto\UpdateStokDto.class
 com\example\demo\controller\ProductController.class
 com\example\demo\entity\ProductEntity.class
