@@ -6,6 +6,8 @@ import com.example.demo.entity.ProductEntity;
 import com.example.demo.service.ProductService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/api/v1/product")
 public class ProductController {
@@ -16,9 +18,9 @@ public class ProductController {
     }
 
     @GetMapping("")
-    public CommonResponse getProducts() {
+    public List<ProductEntity> getProducts() {
         //TODO: Add code to get all product list here
-        return new CommonResponse("Dummy Products");
+        return productService.fetchAll();
     }
 
     @GetMapping("{id}")
@@ -42,7 +44,7 @@ public class ProductController {
 
     @DeleteMapping("{id}")
     public CommonResponse deleteProduct(@PathVariable("id") String id) {
-        //TODO: Add code to get product list here
+        productService.delete(Long.parseLong(id));
         return new CommonResponse("Successfully delete product");
     }
 }

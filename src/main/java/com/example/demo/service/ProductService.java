@@ -5,6 +5,8 @@ import com.example.demo.entity.ProductEntity;
 import com.example.demo.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProductService {
     private final ProductRepository productRepository;
@@ -22,5 +24,13 @@ public class ProductService {
 
         //todo: save ke db
         return productRepository.save(product);
+    }
+
+    public List<ProductEntity> fetchAll(){
+        return (List<ProductEntity>) productRepository.findAll();
+    }
+
+    public void delete(long id){
+        productRepository.deleteById(id);
     }
 }
